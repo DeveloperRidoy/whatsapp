@@ -12,7 +12,7 @@ import OpenConversation from '../components/OpenConversation';
 
 export default function Home () {
   const Router = useRouter();
-  const { id } = useContext(Context);
+  const { id, conversations} = useContext(Context);
 
   const CONVERSATION = 'CONVERSATION';
   const CONTACT = 'CONTACT';
@@ -76,7 +76,7 @@ export default function Home () {
               )}
             </AnimatePresence>
           </div>
-          <OpenConversation/>
+          {Array.isArray(conversations) && <OpenConversation />}
         </div>
       )}
     </div>

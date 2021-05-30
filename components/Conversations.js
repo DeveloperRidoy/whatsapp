@@ -5,7 +5,7 @@ const Conversations = () => {
 
     const {state, setState, contacts, conversations } = useContext(Context);
 
-    const formattedConversations = Array.isArray(conversations)
+    const formattedConversations = Array.isArray(conversations) && Array.isArray(contacts)
       ? conversations.map((conversation) => {
           const recepients = conversation.recepients.map((r) => {
             const contact = contacts.find((contact) => contact.id === r);

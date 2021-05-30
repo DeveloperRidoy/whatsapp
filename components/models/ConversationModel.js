@@ -35,34 +35,31 @@ const ConversationModel = ({ closeModel }) => {
       className="bg-gray-900"
       title="create conversation"
     >
-      <form
-        className="px-4 py-3 grid gap-y-2"
-        onSubmit={createNewConversation}
-      >
-        <label>Recepients</label>
+      <form className="px-4 py-3 grid gap-y-2" onSubmit={createNewConversation}>
+        {Array.isArray(contacts) ? (
+          <>
+            <label>Recepients</label>
         <div className="overflow-y-auto max-h-52">
-          {Array.isArray(contacts) ? (
-            contacts.map((contact) => (
-              <div key={contact.id} className="mb-2 flex items-center">
-                <input
-                  type="checkbox"
-                  name={contact.name}
-                  id={contact.id}
-                  checked={recepients.includes(contact.id)}
-                  value={contact.id}
-                  className="mr-1 border-0 h-4 w-4"
-                  onChange={changeRecepients}
-                />
-                <label htmlFor={contact.id}>{contact.name}</label>
-              </div>
-            ))
-          ) : (
-            <p>No contacts to create conversation</p>
-          )}
+          {contacts.map((contact) => (
+            <div key={contact.id} className="mb-2 flex items-center">
+              <input
+                type="checkbox"
+                name={contact.name}
+                id={contact.id}
+                checked={recepients.includes(contact.id)}
+                value={contact.id}
+                className="mr-1 border-0 h-4 w-4"
+                onChange={changeRecepients}
+              />
+              <label htmlFor={contact.id}>{contact.name}</label>
+            </div>
+          ))}
         </div>
         <button className="bg-blue-600 hover:bg-blue-500 focus:outline-none focus:ring max-w-max p-1 rounded my-1">
           Create
         </button>
+          </>
+        ): <p>no contacts to create conversation</p>}
       </form>
     </Model>
   );

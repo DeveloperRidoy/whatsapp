@@ -1,5 +1,6 @@
 import { createRef, useContext, useEffect, useRef } from "react"
 import { Context } from "../context/GlobalContext"
+import { NOTFOUND } from "../utils/variables";
 import MessageItem from "./MessageItem";
 
 const OpenConversation = () => {
@@ -13,10 +14,9 @@ const OpenConversation = () => {
   const currentConversation = conversations[state.selectedConversation];
 
   // scroll messagebox
-  useEffect(() => messageBox.current.scrollTop += currentConversation.messages.length * 100, [currentConversation.messages.length]);
+  useEffect(() => messageBox.current.scrollTop += currentConversation?.messages?.length * 100, [currentConversation?.messages?.length]);
   
-
-  const formattedConversations = Array.isArray(conversations)
+  const formattedConversations = Array.isArray(conversations) && Array.isArray(contacts)
     ? conversations.map((conversation) => {
         const recepients = conversation.recepients.map((r) => {
           const contact = contacts.find((contact) => contact.id === r);
@@ -25,7 +25,7 @@ const OpenConversation = () => {
         });
 
       const messages = conversation.messages.map(message => {
-        let messageSenderName = contacts.find(contact => contact.id === message.sender)?.name;
+        let messageSenderName = contacts.find(contact => contact.id === message.sender)?.name || message.sender
         if (message.sender === id) messageSenderName = 'me';
         return { ...message, sender: messageSenderName };
         })
@@ -51,10 +51,10 @@ const OpenConversation = () => {
     return (
       <div className="flex flex-col flex-grow h-full overflow-hidden">
         <div
-          className="flex flex-col flex-grow overflow-auto  p-2"
+          className="flex flex-col flex-grow overflow-auto justify-end  p-2"
           ref={messageBox}
         >
-          {formattedConversations[state.selectedConversation].messages.map(
+          {formattedConversations[state.selectedConversation]?.messages.map(
             (msg, i) => <MessageItem msg={msg} key={i}/>
           )}
         </div>
