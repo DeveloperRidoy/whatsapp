@@ -7,7 +7,7 @@ const ContactModel = ({ closeModel }) => {
   
   const idRef = createRef();
   const nameRef = createRef();
-
+ 
   const {contacts, setContacts, id } = useContext(Context);
   const [error, setError] = useState(null);
 

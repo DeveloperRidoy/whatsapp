@@ -23,6 +23,9 @@ const ConversationModel = ({ closeModel }) => {
 
   const createNewConversation = e => {
     e.preventDefault();
+
+    if (recepients.length === 0) return setError('select a contact first');
+
     if (Array.isArray(conversations)) {
       const duplicateConvesation = conversations.find(c => arraysEqual(c.recepients, [...recepients, id]));
       if (duplicateConvesation) return setError(`conversation with same people already exists`);
@@ -50,7 +53,7 @@ const ConversationModel = ({ closeModel }) => {
     >
       <form className="px-4 py-3 grid gap-y-2" onSubmit={createNewConversation}>
         {error && <p className="p-1 rounded bg-red-500">{error}</p>}
-        {Array.isArray(contacts) ? (
+        {Array.isArray(contacts) && contacts.length > 0 ? (
           <>
             <label>Recepients</label>
             <div className="overflow-y-auto max-h-52">

@@ -5,16 +5,21 @@ const Conversations = ({hideSidebar}) => {
 
     const {state, setState, contacts, conversations, setConversations, id } = useContext(Context);
 
-    const formattedConversations = Array.isArray(conversations) && Array.isArray(contacts)
-      ? conversations.map((conversation) => {
-          let recepients = conversation?.recepients?.map((r) => {
-            const name = contacts.find((contact) => contact.id === r)?.name || r;
-            return { id: r, name };
-          });
-        recepients = recepients?.filter(r => r.id !== id);
-          return {...conversation, recepients}
-        })
-      : [];
+    const formattedConversations =
+      Array.isArray(conversations) &&
+      conversations.length > 0 &&
+      Array.isArray(contacts) &&
+      contacts.length > 0
+        ? conversations.map((conversation) => {
+            let recepients = conversation?.recepients?.map((r) => {
+              const name =
+                contacts.find((contact) => contact.id === r)?.name || r;
+              return { id: r, name };
+            });
+            recepients = recepients?.filter((r) => r.id !== id);
+            return { ...conversation, recepients };
+          })
+        : [];
     const [activeConversation, setActiveConversation] = useState(0);
 
   const deleteConversation = (e, conversation) => {
