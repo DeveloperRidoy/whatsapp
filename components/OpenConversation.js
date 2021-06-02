@@ -60,8 +60,7 @@ const OpenConversation = () => {
     // clear text form
     e.target.reset();
   }
-
-  console.log(formattedConversations[state.selectedConversation]?.messages?.length)
+  
     return (
       <div className="flex flex-col overflow-hidden flex-grow">
         <div
