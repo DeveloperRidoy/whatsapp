@@ -33,7 +33,7 @@ const SocketContextProvider = ({ id, children }) => {
             return c;
         }) 
         setConversations(updatedConversations);
-        console.log(conversations)
+        console.log(updatedConversations)
     };
 
     useEffect(() => {
