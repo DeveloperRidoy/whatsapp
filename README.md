@@ -1,7 +1,7 @@
 #realtime chat app using nextjs and socket.io
 
 hosted website link:
-[whatsapp](https://developerridoy.github.io/weather-app/)
+[whatsapp](https://whatsapp-socket.herokuapp.com/)
 
 # Next.js + Tailwind CSS Example
 
