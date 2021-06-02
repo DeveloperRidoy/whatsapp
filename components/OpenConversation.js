@@ -63,7 +63,7 @@ const OpenConversation = () => {
   }
 
     return (
-      <div className="flex flex-col overflow-hidden flex-grow">
+      <div className="flex flex-col overflow-hidden flex-grow mt-10 md:mt-0">
         <div
           className="flex-grow flex flex-col p-2 overflow-auto"
           ref={messageBox}
