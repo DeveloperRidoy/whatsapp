@@ -1,6 +1,5 @@
 import moment from "moment";
-import { useContext, useState } from "react";
-import { Context } from "../context/GlobalContext";
+import {  useState } from "react";
 
 
 const MessageItem = ({ msg, className }) => {
