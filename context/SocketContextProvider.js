@@ -26,15 +26,14 @@ const SocketContextProvider = ({ id, children }) => {
     }, [id])
 
     const addMessageToConversation = (recepients,message) => {
-        const targetConversation = conversations.find(c => arraysEqual(c.recepients, recepients))
-        // const updatedConversations = conversations.map(c => {
-        //     if (c.id === targetConversation.id) {
-        //         c.messages.push(message);
-        //     }
-        //     return c;
-        // }) 
-        // setConversations(updatedConversations);
-        console.log(conversations,targetConversation)
+        const updatedConversations = conversations.map(c => {
+            if (arraysEqual(c.recepients, recepients)) {
+              c.messages.push(message);
+            }
+            return c;
+        }) 
+        setConversations(updatedConversations);
+        console.log(conversations)
     };
 
     useEffect(() => {
