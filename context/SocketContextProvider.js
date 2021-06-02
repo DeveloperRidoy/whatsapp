@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import arraysEqual from "../utils/arraysEqual";
-import { NOTFOUND, NOTSET, RECEIVE_MESSAGE } from "../utils/variables";
+import { RECEIVE_MESSAGE } from "../utils/variables";
 import { Context } from "./GlobalContext";
-import { cloneDeep } from 'lodash';
 
 const SocketContext = createContext();
 export const useSocket = () => useContext(SocketContext);
@@ -28,14 +27,14 @@ const SocketContextProvider = ({ id, children }) => {
 
     const addMessageToConversation = (recepients,message) => {
         const targetConversation = conversations.find(conversation => arraysEqual(conversation.recepients, recepients))
-        const updatedConversations = conversations.map(c => {
-            if (c.id === targetConversation.id) {
-                c.messages.push(message);
-            }
-            return c;
-        })
-        setConversations(updatedConversations);
-        console.log(conversations, recepients, message)
+        // const updatedConversations = conversations.map(c => {
+        //     if (c.id === targetConversation.id) {
+        //         c.messages.push(message);
+        //     }
+        //     return c;
+        // })
+        // setConversations(updatedConversations);
+        console.log(conversations, recepients, message, targetConversation)
     };
 
     useEffect(() => {
