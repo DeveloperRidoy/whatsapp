@@ -8,7 +8,8 @@ const OpenConversation = () => {
 
   const socket = useSocket();
 
-  const { state, id, conversations, contacts } = useContext(Context);
+  const { state, id, conversations, contacts } =
+    useContext(Context);
 
   const messageBox = createRef();
 
@@ -60,7 +61,7 @@ const OpenConversation = () => {
     // clear text form
     e.target.reset();
   }
-  
+
     return (
       <div className="flex flex-col overflow-hidden flex-grow">
         <div
@@ -69,10 +70,7 @@ const OpenConversation = () => {
         >
           {formattedConversations[state.selectedConversation]?.messages?.map(
             (msg, i) => (
-              <MessageItem
-                msg={msg}
-                key={i}
-              />
+              <MessageItem msg={msg} key={i}/>
             )
           )}
         </div>
@@ -84,9 +82,7 @@ const OpenConversation = () => {
             className="flex-1 p-2 text-black focus:outline-none focus:ring"
             ref={messageRef}
           ></textarea>
-          <button
-            className="bg-blue-600 px-5 md:px-16 md:text-3xl focus:outline-none focus:ring focus:bg-blue-700"
-          >
+          <button className="bg-blue-600 px-5 md:px-16 md:text-3xl focus:outline-none focus:ring focus:bg-blue-700">
             Send
           </button>
         </form>
