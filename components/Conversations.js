@@ -1,40 +1,58 @@
 import { useContext, useEffect, useState } from "react"
 import { Context } from "../context/GlobalContext"
 
-const Conversations = () => {
+const Conversations = ({hideSidebar}) => {
 
-    const {state, setState, contacts, conversations } = useContext(Context);
+    const {state, setState, contacts, conversations, setConversations, id } = useContext(Context);
 
     const formattedConversations = Array.isArray(conversations) && Array.isArray(contacts)
       ? conversations.map((conversation) => {
-          const recepients = conversation.recepients.map((r) => {
-            const contact = contacts.find((contact) => contact.id === r);
-            const name = (contact && contact.name) || r;
+          let recepients = conversation?.recepients?.map((r) => {
+            const name = contacts.find((contact) => contact.id === r)?.name || r;
             return { id: r, name };
           });
+        recepients = recepients?.filter(r => r.id !== id);
           return {...conversation, recepients}
         })
       : [];
-    
     const [activeConversation, setActiveConversation] = useState(0);
 
+  const deleteConversation = (e, conversation) => {
+    e.stopPropagation();
+    if (!confirm('delete this conversation?')) return;
+    setConversations(conversations.filter(c => c.id !== conversation.id));
+    }
+  
     return (
       <div className="py-2">
-        {formattedConversations.map((conversation, i) => (
-          <button
+        {formattedConversations?.map((conversation, i) => (
+          <div
             key={i}
-            className={`block focus:outline-none px-1 py-3 w-full flex justify-start ${
+            tabIndex={0}
+            className={`block focus:outline-none px-1 py-3 w-full flex justify-between cursor-pointer ${
               activeConversation === i ? "bg-blue-500" : "focus:bg-blue-400"
             }`}
-                onClick={() => { setActiveConversation(i); setState({...state, selectedConversation:i})}}
+            onClick={() => {
+              setActiveConversation(i);
+              setState({ ...state, selectedConversation: i });
+              hideSidebar();
+            }}
           >
-            {conversation.recepients.map(
-              (r, i) =>
-                `${r.name}${
-                  i === conversation.recepients.length - 1 ? "" : ", "
-                }`
-            )}
-          </button>
+            <div>
+              {conversation?.recepients?.map(
+                (r, i) =>
+                  `${r.name}${
+                    i === conversation.recepients.length - 1 ? "" : ", "
+                  }`
+              )}
+            </div>
+            <button
+              className="px-2"
+              onClick={e => deleteConversation(e, conversation)}
+            >
+              <i aria-hidden className="fas fa-times"></i>
+            </button>
+          </div>
         ))}
       </div>
     );

@@ -1,13 +1,15 @@
 import moment from "moment";
 import { useState } from "react";
 
+
 const MessageItem = ({ msg }) => {
+
   const [expand, setExpand] = useState(false);
   return (
-    <div className={`flex flex-col my-2 ${msg.sender === "me" ? "self-end" : "self-start"}`}>
+    <div className={`flex flex-col my-2 ${msg.sender === "You" ? "self-end" : "self-start"}`}>
       <p
-        className={`self-end rounded-xl py-1.5 px-3 cursor-pointer ${
-          msg.sender === "me" ? "bg-blue-500" : "bg-gray-500"
+        className={`rounded-xl py-1.5 px-3 cursor-pointer ${
+          msg.sender === "You" ? "bg-blue-500 self-end" : "bg-gray-500 self-start"
         }`}
         onClick={() => setExpand(!expand)}
       >

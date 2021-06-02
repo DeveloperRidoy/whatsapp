@@ -1,2 +1,4 @@
-export const NOTSET = 'NOTSET';
-export const NOTFOUND = 'NOTFOUND';
+exports.NOTSET = 'NOTSET';
+exports.NOTFOUND = 'NOTFOUND';
+exports.SEND_MESSAGE = 'SEND_MESSAGE';
+exports.RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
