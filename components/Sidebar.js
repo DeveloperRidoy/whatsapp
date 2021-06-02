@@ -10,10 +10,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
     const CONVERSATION = "CONVERSATION";
     const CONTACT = "CONTACT";
-    const { id } = useContext(Context);
+    const { id, conversations } = useContext(Context);
     const [activeMode, setActiveMode] = useState(CONVERSATION);
     const [showModel, setShowModel] = useState(false);
-
   return (
     <div
       className={`absolute md:static md:w-[250px] inset-0 transform md:transform-none transition flex flex-col h-full bg-gray-700 ${
@@ -39,12 +38,14 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             Contacts
           </button>
         </div>
-        <button
-          className="px-2 mr-2 text-xl md:hidden"
-          onClick={() => setShowSidebar(false)}
-        >
-          <i className="fas fa-arrow-circle-right" aria-hidden></i>
-        </button>
+        {Array.isArray(conversations) && conversations.length > 0 && (
+          <button
+            className="px-2 mr-2 text-xl md:hidden"
+            onClick={() => setShowSidebar(false)}
+          >
+            <i className="fas fa-arrow-circle-right" aria-hidden></i>
+          </button>
+        )}
       </div>
       <div className=" h-full bg-gray-800 rounded-t overflow-auto">
         {activeMode === CONVERSATION ? (

@@ -16,7 +16,7 @@ export default function Home () {
   useEffect(() => id === NOTFOUND && Router.replace('/login'), [id])
 
 
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(!Array.isArray(conversations));
 
   return (
     <div className="bg-gray-700 text-white">
@@ -26,9 +26,9 @@ export default function Home () {
       </Head>
       {id !== NOTSET && id !== NOTFOUND && (
         <div className="h-screen flex overflow-hidden">
-          <MobileMenu setShowSidebar={setShowSidebar}/>
+          <MobileMenu setShowSidebar={setShowSidebar} />
           <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
-          {Array.isArray(conversations) && (
+          {Array.isArray(conversations) && conversations.length > 0  && (
             <SocketContextProvider id={id}>
               <OpenConversation />
             </SocketContextProvider>
