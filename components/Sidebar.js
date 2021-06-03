@@ -15,7 +15,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     const [showModel, setShowModel] = useState(false);
   return (
     <div
-      className={`absolute md:static md:w-[250px] inset-0 transform md:transform-none transition flex flex-col h-full bg-gray-700 ${
+      className={`absolute md:static md:w-[250px] h-screen w-full transform md:transform-none transition flex flex-col bg-gray-700 ${
         showSidebar ? "translate-x-0" : "-translate-x-full"
       }`}
     >
