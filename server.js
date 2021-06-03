@@ -33,22 +33,26 @@ nextApp
     socket(io);
 
     // socket.io admin ui 
-    bcrypt.hash(process.env.SOCKET_ADMIN_PASSWORD, 12, (err, hash) => {
-      if (err) {
-        console.log("shutting down server on error");
-        console.log(err);
-        process.exit(1);
-      }
-      const username = process.env.SOCKET_ADMIN_USERNAME;
-      const password = hash;
-      instrument(io, {
-        auth: {
-          type: "basic",
-          username,
-          password,
-        },
+    const username = process.env.SOCKET_ADMIN_USERNAME;
+    const password = process.env.SOCKET_ADMIN_PASSWORD
+    if (username && password) {
+      bcrypt.hash(password, 12, (err, hash) => {
+        if (err) {
+          console.log("shutting down server on error");
+          console.log(err);
+          process.exit(1);
+        }
+        instrument(io, {
+          auth: {
+            type: "basic",
+            username,
+            password: hash,
+          },
+        });
       });
-    });
+    } else {
+      instrument(io, { auth: false,});
+    }
 
     // show api requests info in development mode
     if (process.env.NODE_ENV !== "production") {
