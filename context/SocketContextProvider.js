@@ -15,15 +15,29 @@ const SocketContextProvider = ({ id, children }) => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        
-        if (!id || id === null) return;
-        // create new socket connection on the current webpage url
-        const newSocket = io(window.location.origin, { query: { id } });
-        setSocket(newSocket);
+      if (!id || id === null) return;
+      // create new socket connection on the current webpage url
+      const newSocket = io(window.location.origin, { query: { id } });
+      setSocket(newSocket);
 
-        // close socket connection on leave
-        return () => newSocket.close();
-        
+      // close socket connection on leave
+      return () => newSocket.close();
+
+      // ************ for testing purposes only ***************//
+      // socket connection on custom namespace;
+    //   const userSocket = io(window.location.origin + "/user", {
+    //     auth: { token: "my-token" },
+    //   });
+
+    //   userSocket.on("connect_error", (err) => console.log(err.message));
+    //   let ping = 0;
+    //   setInterval(() => {
+    //     userSocket.volatile.emit("ping", ping++); // use volatile to drop unsent data on disconnect; otherwise socket will send all the unsent data on reconnect;
+    //   }, 1000);
+    //   document.addEventListener("keydown", (e) => {
+    //     if (e.key === "c") userSocket.connect();
+    //     if (e.key === "d") userSocket.disconnect();
+    //   });
     }, [id])
 
     // receive message
