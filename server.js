@@ -6,11 +6,10 @@ const next = require('next');
 const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
-const morgan = require("morgan");
 const socket = require('./socket/socket');
 const cors = require('cors');
-const { instrument } = require('@socket.io/admin-ui');
-const bcrypt = require('bcrypt');
+const socketAdminUi = require('./socket/socketAdminUi');
+const morgan = require('morgan');
 
 // environmental variables
 dotenv.config({ path: `${__dirname}/.env.local` });
@@ -26,38 +25,19 @@ nextApp
     // trust proxy
     app.enable("trust proxy");
 
-    // cosr 
+    // cors 
     app.use(cors({ origin: ["https://admin.socket.io"], optionsSuccessStatus: 200 }));
-
-    // socket.io connection
-    socket(io);
-
-    // socket.io admin ui 
-    const username = process.env.SOCKET_ADMIN_USERNAME;
-    const password = process.env.SOCKET_ADMIN_PASSWORD
-    if (username && password) {
-      bcrypt.hash(password, 12, (err, hash) => {
-        if (err) {
-          console.log("shutting down server on error");
-          console.log(err);
-          process.exit(1);
-        }
-        instrument(io, {
-          auth: {
-            type: "basic",
-            username,
-            password: hash,
-          },
-        });
-      });
-    } else {
-      instrument(io, { auth: false,});
-    }
 
     // show api requests info in development mode
     if (process.env.NODE_ENV !== "production") {
       app.use(morgan("combined"));
     }
+
+    // socket.io connection
+    socket(io);
+
+    // socket.io admin ui 
+    socketAdminUi(io);
 
     // compress response
     app.use(compression());
