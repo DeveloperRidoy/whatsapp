@@ -4,8 +4,8 @@ const sendMessage = require('./methods/sendMessage');
 module.exports = (io) => {
     io.on("connect", (socket) => {
         const id = socket.handshake.query.id;
-        socket.join(id);
-        console.log("socket connection successfull" + ` and joinded room ${id}`);
+      socket.join(id);
+      console.log('client connected')
         socket.emit("connection", {
             status: "connected",
             msg: "message from socket.io",

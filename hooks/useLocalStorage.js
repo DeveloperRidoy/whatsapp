@@ -15,14 +15,13 @@ function useLocalStorage (key, initialValue = NOTSET ) {
         if (jsonValue !== null) return setValue(JSON.parse(jsonValue));
         return setValue(NOTFOUND);
     }, [key])
-
+    
     useEffect(() => {
-        if (!value || !key || value === NOTFOUND || value === NOTSET) return;
+        if (!value || !key ) return;
         localStorage.setItem(prefixedKey, JSON.stringify(value));
     }, [key, value])
 
     return [value, setValue];
 }
-
 
 export default useLocalStorage

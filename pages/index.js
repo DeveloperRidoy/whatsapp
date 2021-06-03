@@ -29,7 +29,7 @@ export default function Home () {
           <MobileMenu setShowSidebar={setShowSidebar} />
           <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar}/>
           {Array.isArray(conversations) && conversations.length > 0  && (
-            <SocketContextProvider id={id}>
+            <SocketContextProvider id={id} key={conversations}>
               <OpenConversation />
             </SocketContextProvider>
           )}

@@ -14,6 +14,7 @@ function GlobalContext ({ children }) {
     const [state, setState] = useState({
         selectedConversation: 0,
     })
+    
 
     return (
         <Context.Provider

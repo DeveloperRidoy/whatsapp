@@ -1,4 +1,4 @@
-import { createRef, useContext, useEffect, useState } from "react"
+import { createRef, useContext, useEffect } from "react"
 import { Context } from "../context/GlobalContext"
 import { useSocket } from "../context/SocketContextProvider";
 import { SEND_MESSAGE } from "../utils/variables";
@@ -8,8 +8,7 @@ const OpenConversation = () => {
 
   const socket = useSocket();
 
-  const { state, id, conversations, contacts } =
-    useContext(Context);
+  const { state, id, conversations, contacts } = useContext(Context);
 
   const messageBox = createRef();
 
@@ -21,7 +20,7 @@ const OpenConversation = () => {
   useEffect(() => messageBox.current.scrollTop += currentConversation?.messages?.length * 100, [currentConversation?.messages?.length]);
   
   // format conversations
-  const formattedConversations = Array.isArray(conversations) && Array.isArray(contacts)
+  const formattedConversations = Array.isArray(conversations) && conversations.length > 0 && Array.isArray (contacts) 
     ? conversations.map((conversation) => {
         const recepients = conversation?.recepients?.map((r) => {
           const contact = contacts.find((contact) => contact.id === r);
